@@ -12,7 +12,9 @@
         <div id="todo-list"></div>
 
         <script>
-            const todos = [{
+
+            // Model
+            let todos = [{
                 title: 'Get groceries',
                 dueDate: '2021-10-04',
                 id: 'id1'
@@ -26,34 +28,47 @@
                 id: 'id3'
             }]
 
-            render()
+            //creates a todo
 
+            function createTodo(title, dueDate) {           
+             const id = '' + new Date().getTime()
+                todos.push({
+                    title: title,
+                    dueDate: dueDate,
+                    id: id
+                })
+            }
+
+            //deletes a todo
+            function removeTodo(idToDelete) {
+                todos = todos.filter(function (todo) {
+                    if (todo.id === idToDelete) {
+                        return false
+                    }  else {
+                        return true
+                    }
+                })
+
+            }
+            
+//Controller
             function addTodo() {
                 const textbox = document.getElementById('todo-title')
                 const title = textbox.value
                 const datePicker = document.getElementById("date-picker")
                 const dueDate = datePicker.value
 
-                const id = new Date().getTime()
-
-                todos.push({
-                    title: title,
-                    dueDate: dueDate,
-                    id: id
-                })
-
+                createTodo(title, dueDate)
                 render()
             }
 
             function deleteTodo(event) {
                 const deleteButton = event.target
                 const idToDelete = deleteButton.id
-
-                todos.filter(function (todo) {
-                    
-                })
+                removeTodo(idToDelete)
+                render()
             }
-
+            //View
             function render() {
                 // reset our 
                 document.getElementById("todo-list").innerHTML = '' 
